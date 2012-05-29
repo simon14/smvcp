@@ -1,0 +1,245 @@
+/** 
+* Description: Core theme for Lydia
+*/
+
+/**
+* Structure
+*//*
+html{}
+body{
+   background-color:#eee;
+   font: 1em Verdana, Arial, Helvetica, sans-serif;
+}
+
+#header,
+#main,
+#footer {
+   margin:0 auto;
+   width:970px;
+   background-color:#fff;
+   padding: 1em;
+}*/
+
+/*============================
+// NAVBAR STYLE
+//===========================*/
+
+#navbar {
+	font-family: Futura, Arial;
+	text-transform: uppercase;
+  	font-size:0.8em;
+  	padding: 8px 8px;
+  	text-align:center;
+}
+#navbar a {
+	padding:5px 15px;
+	text-decoration:none;
+	color:#666666;
+	border-radius:3px;
+	border:1px solid transparent;
+	
+}
+#navbar a:hover  {
+	color:orange;
+	border:1px solid transparent;
+}
+
+#navbar a.selected {
+	color:orange;
+
+}
+
+#loginNav {
+	position:fixed;
+	width:70px;
+ 	top:0;
+ 	right:10px;
+	margin:5px;
+	margin: 5px auto 0px auto;
+	padding: 5px;
+	border: 1px solid black;
+	border-radius:5px;
+	background: #2B2B2B;
+	-moz-box-shadow: inset 0 0 8px #1C1C1C;
+	-webkit-box-shadow: inset 0 0 8px #1C1C1C;
+	box-shadow: inset 0 0 8px #1C1C1C;
+}
+
+#loginNav a {
+	width:60px;
+	margin:5px;
+	text-decoration:none;
+	color:#666666;
+	border-radius:3px;
+}
+
+#loginNav a:hover  {
+	color:orange;
+}
+
+
+/*============================
+// BODY & DIV STYLE
+//===========================*/
+
+body {
+	margin:0px;
+	padding:0px;
+	border:0px;
+	background-image:url('../../site/img/background.png');
+}
+
+div.header {
+	font-family: helvetica neue; arial;
+	text-align:center;
+}
+
+div.wrapper {
+	min-width:300px;
+	max-width:800px;
+	margin: 5px auto 0px auto;
+	border: 1px solid black;
+	border-radius:5px;
+	background: #2B2B2B;
+	-moz-box-shadow: inset 0 0 8px #1C1C1C;
+	-webkit-box-shadow: inset 0 0 8px #1C1C1C;
+	box-shadow: inset 0 0 8px #1C1C1C;
+	
+}
+
+div.main {
+	font-family: helvetica neue; arial;
+	font-size:0.9em;
+	color:grey;
+	min-width:250px;
+	max-width:700px;
+	padding:50px;
+	padding-top:20px;
+	margin:15px;
+	
+}
+
+div.footer {
+  	font-family: helvetica neue; arial;
+  	font-size:0.6em;
+  	font-style:italic;
+  	padding:8px;
+  	color:grey;
+  	text-align:center;
+  	float:none;
+}
+
+p.post {
+	margin: 10px auto 0px auto;
+	padding: 15px;
+	background: #2B2B2B;
+
+}
+
+p.validation {
+	border: 1px solid white;
+	background: red;
+	color:white;
+}
+
+small.valerror {
+	color:white;
+	border:1px solid black;
+	border-top-left-radius:8px;
+	border-bottom-left-radius:2px;
+	background:red;	
+	padding:5px;
+}
+
+div.success {
+	background:green;
+	padding:10px;
+	color:white;
+	border-radius:5px;
+}
+
+div.warning, div.error, div.alert {
+	background:red;
+	padding:10px;
+	color:white;
+	border-radius:5px;
+}
+
+div.notice, div.info {
+	color:orange;
+}
+
+div.floater {
+	font-family: helvetica neue; arial;
+	text-align:center;
+	position:relative;
+}
+
+input.button {
+	border: 1px solid transparent;
+	background:transparent;
+	color:grey;
+	font-size:0.8em;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+input.field {
+	font-family:helvetica neue;
+	padding:5px;
+	background:grey;
+	color:#fff;
+	border: 1px solid black;
+	border-radius:5px;
+}
+
+label {
+	font-size:0.9em;
+}
+
+input:hover {
+	color:orange;
+	border:1px solid orange;
+	border-radius:5px;
+}
+
+textarea {
+	font-family:helvetica neue;
+	max-width:650px;
+	width:650px;
+	height:100px;
+	padding:10px;
+	background:grey;
+	color:#fff;
+	border: 1px solid black;
+	border-radius:5px;
+
+}
+
+fieldset {
+	border:1px solid transparent;
+}
+
+img {
+	border:1px solid black;
+	border-radius:5px;
+}
+
+/*============================
+// HEADER STYLE
+//===========================*/
+
+h1 {
+	color:#666666;
+}
+
+h3 {
+	color:grey;
+}
+
+A.no_bottom{color:#fff; font-size:1em; text-decoration:none;}
+A:link {color:#fff;}
+A:visited {color:#fff;}
+A:active {color:#fff;}
+A:hover {color: orange;}
+

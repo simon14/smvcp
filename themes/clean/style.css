@@ -1,0 +1,300 @@
+/*============================
+//
+// Clean SMVC
+//  - Additional core-theme of SMVC
+// 
+//  Simon Hevosmaa
+//===========================*/
+
+
+/*============================
+// NAVBAR STYLE
+//===========================*/
+
+#navbar {
+	font: inherit;
+  	font-size:0.8em;
+  	padding: 20px 8px;
+  	text-shadow: 0px 0px blue, 1px -1px white;
+}
+#navbar a {
+	padding:16px 9px 16px 9px;
+	text-decoration:none;
+	color:grey;
+
+}
+#navbar a:hover  {
+	border-bottom:2px solid pink;
+	color:black;
+}
+
+#navbar a.selected {
+	border-bottom:2px solid pink;
+	color:black;
+}
+
+#loginNav {
+	font-family:helvetica neue, arial;
+	position:fixed;
+	top:-2px;
+	padding: 5px;
+	font-size:0.8em;
+	background:#2B2B2B;
+	width:100%;
+	border-bottom:1px solid black;
+}
+
+#loginNav a {
+	width:60px;
+	margin:5px;
+	padding-right:10px;
+	color:grey;
+	border-radius:3px;
+	text-decoration:none;
+}
+
+#loginNav a:hover  {
+	color:white;
+}
+
+
+/*============================
+// BODY & DIV STYLE
+//===========================*/
+
+body {
+	font-family: Trebuchet MS;
+	margin:0px;
+	padding:0px;
+	border:0px;
+	background-image:url('../../site/img/bg-pattern.png');
+}
+
+div.header {
+	padding-top:25px;
+	padding-bottom:25px;
+	min-height:60px;
+}
+
+div.sub-menu {
+
+}
+
+div.wrapper {
+	width:980px;
+	margin: 5px auto 0px auto;
+
+
+/*	-moz-box-shadow: inset 0 0 8px #1C1C1C;
+	-webkit-box-shadow: inset 0 0 8px #1C1C1C;
+	box-shadow: inset 0 0 8px #1C1C1C;*/
+	
+}
+
+div.main {
+	font-size:0.9em;
+	color:grey;
+}
+
+div.footer {
+	border-top:2px dashed #DDD;
+  	font-size:0.6em;
+  	padding:8px;
+  	text-align:left;
+  	color:grey;
+  	margin-top:40px;
+}
+
+div.main-header {
+	float:left;
+}
+
+div.content {
+	background:white;
+	margin-top:10px;
+	padding:5px;
+	padding-left:10px;
+	border-bottom:2px solid #ddd;
+}
+
+div.main-menu {
+	float:right;
+}
+
+::selection {
+	background: #565656;
+	color: white;
+}
+
+div.white-line {
+	width:980px;
+	height:8px;
+	background:white;
+	border-bottom:2px solid #ddd;
+}
+
+div.post {
+	padding:20px;
+	width:200px;
+	height:100px;
+	border:1px solid black;
+	float: left;
+	margin: 30px 30px 0 0;
+	position: relative;
+}
+
+p.hide {
+	width:960px
+	height:8px;
+}
+
+p.post {
+	margin: 10px auto 0px auto;
+	padding: 15px;
+}
+
+p.validation {
+	border: 1px solid white;
+	background: red;
+	color:white;
+}
+
+p.smaller-text {
+	font-size:0.8em;
+	text-align:right;
+}
+
+
+small.valerror {
+	color:white;
+	border:1px solid #ddd;
+	background:red;	
+	padding:5px;
+}
+
+div.success {
+	background:green;
+	padding:10px;
+	color:white;
+	border-bottom:2px solid #ddd;
+}
+
+div.warning, div.error, div.alert {
+	background:red;
+	padding:10px;
+	color:white;
+	border-bottom:2px solid #ddd;
+}
+
+div.notice, div.info {
+	color:#2d2d2d;
+	background:white;
+	padding:10px;
+	border-bottom:2px solid #ddd;
+}
+
+div.floater {
+	text-align:right;
+	position:relative;
+	height:50px;
+}
+
+input.button {
+	border: 2px solid transparent;
+	background:pink;
+	color:white;
+	font-size:0.8em;
+	padding:5px 10px 5px 10px;
+
+}
+
+input.button:hover {
+	border: 2px solid transparent;
+	background:red;
+	color:white;
+	cursor:pointer;
+}
+
+input.field {
+	font-family:helvetica neue;
+	padding:10px;
+	color:grey;
+	border: 1px solid #ddd;
+	width:200px;
+}
+
+select.drop {
+	font-family:helvetica neue;
+	padding:10px;
+	color:grey;
+	border: 1px solid #ddd;
+	width:200px;
+}
+
+
+input.field:hover {
+	border: 1px solid pink;
+}
+
+label {
+	font-size:0.9em;
+}
+
+input:hover {
+	color:black;
+	border-bottom:2px solid pink;
+}
+
+textarea {
+	font-family:helvetica neue;
+	height:100px;
+	padding:10px;
+	color:#2d2d2d;
+	border:1px solid #ddd;
+	width:200px;
+
+}
+
+textarea.guestbook {
+	min-width:940px;
+	max-width:940px;
+}
+
+fieldset {
+	border:1px solid transparent;
+}
+
+
+/*============================
+// HEADER STYLE
+//===========================*/
+
+h1 {
+	text-transform:uppercase;
+	color:white;
+	font-weight:normal;
+	display:inline-block;
+	background:#444;
+	margin-bottom:8px;
+	padding:10px;
+	line-height:25px;
+	-moz-box-shadow: 0 2px 6px #565656;
+	-webkit-box-shadow: 0 2px 6px #565656;
+	box-shadow: 0 2px 6px #565656;
+}
+
+span.page-title {
+	
+}
+
+
+h3 {
+	color:grey;
+}
+
+A.no_bottom{color:#fff; font-size:1em; text-decoration:none;}
+A:link {color:grey;}
+A:visited {color:grey;}
+A:active {color:grey;}
+A:hover {color:black;}
+

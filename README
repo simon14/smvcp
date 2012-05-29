@@ -1,0 +1,6 @@
+SMVC - A Mvc framework
+
+:: Installation ::
+
+Open config.php, found in /site/. Change the database info so it matches your database, at this moment only MySQL works.
+Then point your browser to the startpage and press the Install link. Assuming that you have fixed the .htaccess file.
