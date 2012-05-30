@@ -26,6 +26,7 @@ class CCNews extends CObject implements IController {
                   'contents' => $content->GetAllFilteredData('desc'), 
                   'gravatar' => $gravatars,
                   'userId'	 => $this->user->GetId(),
+                  'userWriter' => $this->user->IsWriter(),
                 ));
   }
 

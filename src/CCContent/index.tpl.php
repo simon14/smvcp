@@ -5,8 +5,8 @@
 <h2>Your content</h2>
 <?php if($contents != null):?>
   <?php foreach($contents as $val):?>
-  <?php if($val['owner']==$user['akronym']):?>
-  		<p><?=$val['id']?>. <?=$val['title']?> - Writer: <?=$val['owner']?> 
+  <?php if($val['owner']==$user['akronym'] && empty($val['deleted'])):?>
+  		<p><?=$val['id']?>. <?=$val['title']?> - Writer: You
 		<a href='<?=create_url("content/edit/{$val['id']}")?>'>edit</a> <a href='<?=create_url("page/view/{$val['id']}")?>'>view</a> <a href='<?=create_url("page/delete/{$val['id']}/content")?>'>delete</a></p>
   <?php endif;?>
   <?php endforeach; ?>
@@ -30,4 +30,5 @@
 <h2>Actions</h2>
 <ul>
   <li><a href='<?=create_url('content/create')?>'>Create new content</a>
+  <li><a href='<?=create_url('content/restore')?>'>Restore old content</a>
 </ul>

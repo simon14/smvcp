@@ -271,13 +271,13 @@ body {
 #primary {
   display:inline;
   float:left;
-  width:620px;
+  width:780px;
   margin:0 10px;
 }
 #sidebar {
   display:inline;
   float:left;
-  width:300px;
+  width:140px;
   margin:0 10px;
 }
 #inner-wrap-triptych {

@@ -63,13 +63,22 @@ $cs->config['controllers'] = array(
   'news'   => array('enabled' => true,'class' => 'CCNews'),
 );
 
+/**
+* Define a routing table for urls.
+*
+* Route custom urls to a defined controller/method/arguments
+*/
+$cs->config['routing'] = array(
+  'about' => array('enabled' => true, 'url' => 'page/view/5'),
+);
+
 /*
  *	Define which theme that should be used from the themes-folder (default: theme)
  */
 $cs->config['theme']=array(
 	'name'			  => 'grid',			// Theme to be used
   	'stylesheet'      => 'style.css',       // Main stylesheet to include in template files
-	'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
+	'template_file'   => 'default.tpl.php',   // Default template file, else use default.tpl.php
 	 // A list of valid theme regions
   'regions' => array('flash','featured-first','featured-middle','featured-last',
     'primary','sidebar','triptych-first','triptych-middle','triptych-last',

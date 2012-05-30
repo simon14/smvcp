@@ -17,74 +17,73 @@ class CRequest {
 		
 	}
 	
-	public function Init($baseUrl = null) {
-	
-		// Prepare to create current_url and base_url
-	  	  $currentUrl 	= $this->GetCurrentUrl();
-	      $parts        = parse_url($currentUrl);
-	    
-	    // If base_url is not set in config.php, autogenerate it
-	    if(empty($baseUrl)){
-	      $baseUrl      = !empty($baseUrl) ? $baseUrl : "{$parts['scheme']}://{$parts['host']}" . (isset($parts['port']) ? ":{$parts['port']}" : '') . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
-		}
+  /**
+   * Parse the current url request and divide it in controller, method and arguments.
+   *
+   * Calculates the base_url of the installation. Stores all useful details in $this.
+   *
+   * @param $baseUrl string use this as a hardcoded baseurl.
+   * @param $routing array key/val to use for routing if url matches key.
+   */
+	public function Init($baseUrl = null, $routing=null) {
+    $requestUri = $_SERVER['REQUEST_URI'];
+    $scriptName = $_SERVER['SCRIPT_NAME'];    
     
-     
-    	$requestUri = $_SERVER['REQUEST_URI'];
-	    $scriptName = $_SERVER['SCRIPT_NAME']; 
+    // Compare REQUEST_URI and SCRIPT_NAME as long they match, leave the rest as current request.
+    $i=0;
+    $len = min(strlen($requestUri), strlen($scriptName));
+    while($i<$len && $requestUri[$i] == $scriptName[$i]) {
+      $i++;
+    }
+    $request = trim(substr($requestUri, $i), '/');
+  
+    // Remove the ?-part from the query when analysing controller/metod/arg1/arg2
+    $queryPos = strpos($request, '?');
+    if($queryPos !== false) {
+      $request = substr($request, 0, $queryPos);
+    }
     
-		/* Take current url and divide it in controller, method and arguments
-    	 * Check if the URL is a querystring ('?q=controller/method')
-    	 * In that case only use whats after '?q='
-    	 * Else pick the whole URL
-    	 */
-    	if(isset($_GET['q'])){
-      		$query = $_GET['q'];
-      	} else {
-			$query = substr($_SERVER['REQUEST_URI'], strlen(rtrim(dirname($_SERVER['SCRIPT_NAME']), '/')));
-      	}
-      		
-      	// Split the query
-	   	$splits = explode('/', trim($query, '/'));
-	   		
-
-	   	if(!empty($splits[0])&&!isset($_GET['q'])){
-				
-			// Check if query is defualt ('index.php/controller/method')
-			$cotains=strrpos($splits[0], '.php');
-			
-		   	// Incase query is default ('index.php/controller/method')
-		   	// Rearrange the array a bit
-	   		if($cotains!==false){
-	   				
-	   			for($i=0; $i<sizeof($splits)-1; $i++){	
-	   				$splits[$i]=$splits[$i+1];
-	   			}
-	   			
-	   			unset($splits[sizeof($splits)-1]);
-	   		}
-	   			
-	   	}
-    	
-	    // Set controller, method and arguments
-	    $controller =  !empty($splits[0]) ? $splits[0] : 'index';
-	    $method       =  !empty($splits[1]) ? $splits[1] : 'index';
-	    $arguments = $splits;
-	    unset($arguments[0], $arguments[1]); // remove controller & method part from argument list
+    // Check if request is empty and querystring link is set
+    if(empty($request) && isset($_GET['q'])) {
+      $request = trim($_GET['q']);
+    }
     
-  	
-	    // Store it
-	    $this->base_url     = rtrim($baseUrl, '/') . '/';
-  	  	$this->current_url  = $currentUrl;
-    	$this->request_uri  = $requestUri;
-    	$this->script_name  = $scriptName;
-    	$this->request      = !empty($request) ? $request : "";
-    	$this->query      	= !empty($query) ? $query : "";
-	    $this->splits       = $splits;
-	    $this->controller   = $controller;
-	    $this->method      	= $method;
-	    $this->arguments    = $arguments;
+    // Check if url matches an entry in routing table
+    $routed_from = null;
+    if(is_array($routing) && isset($routing[$request]) && $routing[$request]['enabled']) {
+      $routed_from = $request;
+      $request = $routing[$request]['url'];
+    }
     
-	}
+    // Split the request into its parts
+    $splits = explode('/', $request);
+    
+    // Set controller, method and arguments
+    $controller =  !empty($splits[0]) ? $splits[0] : 'index';
+    $method 		=  !empty($splits[1]) ? $splits[1] : 'index';
+    $arguments = $splits;
+    unset($arguments[0], $arguments[1]); // remove controller & method part from argument list
+    
+    // Prepare to create current_url and base_url
+    $currentUrl = $this->GetCurrentUrl();
+    $parts 	    = parse_url($currentUrl);
+    $baseUrl 		= !empty($baseUrl) ? $baseUrl : "{$parts['scheme']}://{$parts['host']}" . (isset($parts['port']) ? ":{$parts['port']}" : '') . rtrim(dirname($scriptName), '/');
+    
+    // Store it
+    $this->base_url 	  = rtrim($baseUrl, '/') . '/';
+    $this->current_url  = $currentUrl;
+    $this->request_uri  = $requestUri;
+    $this->script_name  = $scriptName;
+    $this->routed_from  = $routed_from;
+    $this->request      = $request;
+    $this->splits	      = $splits;
+    $this->controller	  = $controller;
+    $this->method	      = $method;
+    $this->arguments    = $arguments;
+    
+    $_SESSION['lastPage'] = isset($_SESSION['currentPage']) ? $_SESSION['currentPage'] : null;
+    $_SESSION['currentPage'] = $currentUrl;
+  }
 	
 	public function GetCurrentUrl() {
 	

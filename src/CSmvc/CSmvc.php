@@ -66,13 +66,12 @@ class CSmvc implements ISingleton {
     *	Get the URL
     */
   	$this->request = new CRequest($this->config['url_type']);
-  	$this->request->Init($this->config['base_url']);
+  	$this->request->Init($this->config['base_url'], $this->config['routing']);
   	$controller = $this->request->controller;
   	$method		= $this->request->method;
   	$arguments	= $this->request->arguments;
 	
-  	
-
+	
     /**
     *	Check if the controller exsists in the site/config.php file
     */

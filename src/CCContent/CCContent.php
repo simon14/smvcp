@@ -57,6 +57,19 @@ class CCContent extends CObject implements IController {
     }
   }
   
+  /**
+   * Restore deleted content, fyller på lite här så skitsidan funkar
+   */
+  public function Restore() {
+	 
+	$content = new CMContent();
+    $this->views->SetTitle('Content Restore');
+    $this->views->AddInclude(__DIR__ . '/restore.tpl.php', array(
+                  'contents' => $content->ListAll(),
+                  'userAdmin' => $this->user->IsAdministrator(),
+                  'user'     => $this->user->GetUserProfile(),
+                ));
+  }
 
   /**
    * Create new content.

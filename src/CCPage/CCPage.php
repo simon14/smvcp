@@ -26,8 +26,7 @@ class CCPage extends CObject implements IController {
                   'content' => null,
                 ));
   }
-
-
+  
   /**
    * Display a page.
    *
@@ -45,7 +44,42 @@ class CCPage extends CObject implements IController {
                   'entries'=>$comment->ReadAll(), 
 			      'formAction'=>$this->request->CreateUrl("page/handler/{$id}"),
 			      'user'=>$this->user,
-                ));
+			      'userWriter'=>$this->user->IsWriter(),
+			      
+                ), 'primary');
+	$this->views->AddInclude(__DIR__.'/sidebar.tpl.php', array(
+				  'nextNews'=>$content->GoNextNews(),
+			      'backNews'=>$content->GoBackNews(),
+			      'news'=>$content['type']=='news',
+			      ), 'sidebar');
+  }
+  
+  /**
+   * Restore deleted a page.
+   *
+   * @param $id integer the id of the page.
+   */
+  public function Restore($id=null) {
+    
+    if($this->user->IsAdministrator()){
+        $content = new CMContent($id);
+    	$content->Restore();
+    }
+    
+    $this->RedirectToController('content/restore');
+  }
+  
+  /**
+   * Like a page.
+   *
+   * @param $id integer the id of the page.
+   */
+  public function Like($id=null) {
+    
+    $content = new CMContent($id);
+ 	$content->Like();
+    
+  	Header('Location:'.$_SESSION['lastPage']);  
   }
   
   public function Delete($id=null, $where=null) {

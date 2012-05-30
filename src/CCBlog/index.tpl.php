@@ -11,7 +11,9 @@
     <?php if(isset($gravatar["{$val['owner']}"])):?>
     	<img style='float:right; padding-left:10px;' src='<?php echo $gravatar["{$val['owner']}"]['gravatar']?>' />
     <?php endif;?>
-    <a href='<?=create_url("content/edit/{$val['id']}")?>'>edit</a> <a href='<?=create_url("page/delete/{$val['id']}/blog")?>'>delete</a> 
+    <?php if($userWriter):?>
+	    <a href='<?=create_url("content/edit/{$val['id']}")?>'>edit</a> <a href='<?=create_url("page/delete/{$val['id']}/blog")?>'>delete</a> 
+	<?php endif;?>
     <br />
     Posted on <?=$val['created']?> by <?=$val['owner']?>
     </p>

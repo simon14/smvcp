@@ -92,6 +92,34 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
   		$this->session->AddMessage('error', 'You are not logged in');
   	}
   }
+  
+  /**
+   * Restores content.
+   */
+  public function Restore() {
+  	
+  	if($this->user->IsAuthenticated() && $this->data['id']!=null){
+  		
+  		if($this->user->IsAdministrator()) {
+  		
+	  		$this->db->ExecuteQuery(self::SQL('restore content'), array($this->data['id']));
+  			$this->session->AddMessage('notice', 'Post restored');
+  		} else {
+  			$this->session->AddMessage('error', 'You cannot restore a post unless your an administrator.');
+  		}
+  	}
+  }
+  
+  public function Like() {
+  	
+  	if(empty($_SESSION['voted']["{$this->data['id']}"])) {
+  		$this->db->ExecuteQuery(self::SQL('like'), array($this->data['id']));
+	  	$_SESSION['voted']["{$this->data['id']}"]=true;
+  	} else {
+  		$this->session->AddMessage('error', 'Already liked this post');
+  	}
+  	
+  }
 
   /**
    * Implementing interface IHasSQL. Encapsulate all SQL used by this class.
@@ -101,7 +129,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
   public static function SQL($key=null) {
     $queries = array(
       'drop table content'		=> "truncate table Content; drop table Content",
-      'create table content'	=> "CREATE TABLE `Content` (  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  `title` varchar(40) DEFAULT NULL,  `short` varchar(150) DEFAULT NULL,  `type` varchar(40) DEFAULT NULL,  `content` text,  `idUser` int(11) DEFAULT NULL,  `image` text,  `img` text,  `filter` varchar(10) DEFAULT NULL,  `created` datetime DEFAULT NULL,  `updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,  `deleted` datetime DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;",
+      'create table content'	=> "CREATE TABLE `Content` (  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  `title` varchar(40) DEFAULT NULL,  `short` varchar(150) DEFAULT NULL,  rating int(11) DEFAULT '0', `type` varchar(40) DEFAULT NULL,  `content` text,  `idUser` int(11) DEFAULT NULL,  `image` text,  `img` text,  `filter` varchar(10) DEFAULT NULL,  `created` datetime DEFAULT NULL,  `updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,  `deleted` datetime DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;",
       'insert content'          => "INSERT INTO `Content` (`title`, `short`, `type`, `content`, `idUser`, `image`, `img`, `filter`, `created`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
       'select * by id'          => 'SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
       'select * by key'         => 'SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.key=%s;',
@@ -110,12 +138,46 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
       'select-all-asc'          => "SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id ORDER BY c.id ASC;",
       'update content'          => "UPDATE Content SET title=?, short=?, type=?, content=?, image=?, img=?, filter=? WHERE id=?;",
       'delete content'			=> "UPDATE Content SET deleted = ? WHERE id = ?;",
+      'restore content'			=> "UPDATE Content SET deleted = NULL WHERE id = ?;",
+      'like'					=> "UPDATE Content SET rating = rating+1 WHERE id = ?;",
+      'select next news'		=> "select * from Content where id<? and type='news' order by id desc;",
+      'select back news' 		=> "select * from Content where id>? and type='news' order by id asc;",
      );
     if(!isset($queries[$key])) {
       throw new Exception("No such SQL query, key '$key' was not found.");
     }
     return $queries[$key];
   }  
+
+  /**
+   * Go next new. Automaticlly get next 'news', created for the browsing buttons in page-view.
+   *
+   * @returns array with next new, else null.
+   */
+  public function GoNextNews() {
+  	
+  	$res=$this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select next news'), array($this['id']));
+  	
+  	$res = isset($res[0]) ? $res[0] : null;
+  	
+  	return $res;
+  	
+  } 
+   
+   
+  /**
+   * Go back new. Automaticlly get next 'news', created for the browsing buttons in page-view.
+   *
+   * @returns array with earlier new, else null.
+   */
+  public function GoBackNews() {
+  
+  	$res=$this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select back news'), array($this['id']));
+  	
+  	$res = isset($res[0]) ? $res[0] : null;
+  	
+  	return $res;
+  }
 
   /**
    * Save content. If it has a id, use it to update current entry or else insert new entry.

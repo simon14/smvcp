@@ -19,7 +19,7 @@ class CFormContent extends CForm {
     $this->content = $content;
     $save = isset($content['id']) ? 'save' : 'create';
     $this->AddElement(new CFormElementText('title', array('value'=>$content['title'], 'class' => 'field')))
-	     ->AddElement(new CFormElementTextarea('short', array('value'=>$content['short'], 'class' => 'textarea')))
+	     ->AddElement(new CFormElementTextarea('short', array('label'=>'Short description, max 30 words:', 'value'=>$content['short'], 'class' => 'textarea')))
       //   ->AddElement(new CFormElementText('type', array('value'=>$content['type'])))
          ->AddElement(new CFormElementTextarea('content', array('label'=>'Content:', 'value'=>$content['content'])))
          ->AddElement(new CFormElementText('image', array('value'=>$content['image'], 'class' => 'field')))
@@ -51,3 +51,5 @@ class CFormContent extends CForm {
   
   
 }
+
+/**' Läger hit en fetekommetar */

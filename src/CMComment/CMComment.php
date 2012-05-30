@@ -44,6 +44,7 @@ class CMComment extends CObject implements IHasSQL, IModule {
   		'insert into comment' 		=> "INSERT INTO comment (entry, postId, userId, date) VALUES (?, ?, ?, ?);",
   		'select * from comment' 	=> 'SELECT * FROM comment ORDER BY id DESC;',
   		'delete from comment'		=> 'TRUNCATE TABLE comment;',
+  		'read all for post'			=> 'SELECT c.*, u.akronym as owner FROM comment AS c INNER JOIN User as u ON c.userId=u.id WHERE c.postId=? ORDER BY id DESC;',
   	);
   	
   	if(!isset($queries[$key])) {
@@ -78,7 +79,7 @@ class CMComment extends CObject implements IHasSQL, IModule {
    */
   public function ReadAll() {
     
-    return  $this->db->ExecuteSelectQueryAndFetchAll("SELECT * FROM comment WHERE postId={$this->id} ORDER BY id DESC;");
+    return  $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('read all for post'), array($this->id));
   }
   
 }

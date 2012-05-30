@@ -8,8 +8,12 @@ class CCAdminControlPanel extends CObject implements IController {
 	
 	public function Index() {
 		
+		$users = new CMUser();
+		
 		$this->views->SetTitle('Manage Modules');
-    	$this->views->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary');
+    	$this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
+    					'users' => $users->GetAllUsers(),
+    					), 'primary');
     	$this->views->AddInclude(__DIR__ . '/sidebar.tpl.php', array(), 'sidebar');
 	}
 	

@@ -13,6 +13,9 @@ class CCUser extends CObject implements IController{
 	
 	public function Index() {
 		
+		
+		//Header('Location:'.$this->request->CreateUrl('user/login'));
+		
 		$this->views->SetTitle('User Profile');
 		$this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
 			'is_authenticated' => $this->userModel->IsAuthenticated(),
@@ -20,8 +23,12 @@ class CCUser extends CObject implements IController{
 		));
 	}
 	
-	public function login($akronymOrEmail=null, $password=null) {
-
+	public function login() {
+			
+		if(empty($_SESSION['redirectTo'])) {
+			$_SESSION['redirectTo']=$_SESSION['lastPage'];
+		}
+	
 	if($this->user->IsAuthenticated()) {
 		
 		$this->views->SetTitle('Login');
@@ -41,14 +48,18 @@ class CCUser extends CObject implements IController{
 	public function DoLogin($form) {
 	
     if($this->user->Login($form['acronym']['value'], $form['password']['value'])) {//$form->GetValue('acronym'), $form->GetValue('password'))) {	//$name, $pass)) {
-      	$this->RedirectToController('profile');
-    } else {
+      	 //$this->RedirectToController('profile');
+      	 $location=isset($_SESSION['redirectTo']) ? $_SESSION['redirectTo'] : $this->request->CreateUrl('user/profile');
+      	 unset($_SESSION['redirectTo']);
+      	 Header('Location:'.$location);
+        } else {
      	 $this->RedirectToController('login');      
     	}
     }
 	
 	public function logout() {
-	
+			
+			unset($_SESSION['redirectTo']);
 			$this->userModel->LogOut();
 			$this->RedirectToController();
 		
@@ -114,6 +125,14 @@ class CCUser extends CObject implements IController{
    		}
     	$this->views->SetTitle('Create user');
         $this->views->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()));     
+  	}
+  	
+  	/**
+  	*	Delete a user.
+  	*/ 
+  	public function Delete($id=null) {
+
+  	  		$this->user->Delete($id);
   	}
   	
    /**

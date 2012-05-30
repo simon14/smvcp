@@ -37,13 +37,19 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
           			$password = $this->CreatePassword('doe');
           			$this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['password'],  $password['salt'], date('c')));
           			$idDoeUser = $this->db->LastInsertId();
+          			$password = $this->CreatePassword('writer');
+          			$this->db->ExecuteQuery(self::SQL('insert into user'), array('writer', 'Man/Woman Writer', 'writer@dbwebb.se', $password['password'],  $password['salt'], date('c')));
+          			$idWriterUser = $this->db->LastInsertId();
           			$this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group'));
           			$idAdminGroup = $this->db->LastInsertId();
           			$this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'The User Group'));
           			$idUserGroup = $this->db->LastInsertId();
+          			$this->db->ExecuteQuery(self::SQL('insert into group'), array('writer', 'The Writer Group'));
+          			$idWriterGroup = $this->db->LastInsertId();
           			$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
           			$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
           			$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
+          			$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idWriterUser, $idWriterGroup));
 
 
 		          	return array('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user as doe:doe.');
@@ -100,7 +106,9 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       		'get group memberships'   => "SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;",
       		'update profile'		  => "UPDATE User SET name = ?, email = ?  WHERE id = ?;",
       		'update password'		  => "UPDATE User SET password = ?, salt = ? WHERE id = ?;",
-      		'get all'				  => "SELECT * FROM User;"
+      		'get all'				  => "SELECT * FROM User;",
+      		'delete user'			  => "DELETE FROM User WHERE id=?;",
+
 		);
 		
 		if(!isset($queries[$key])) {
@@ -115,6 +123,14 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 	*/
 	public function Init() {
 	
+	}
+	
+	public function Delete($id=null) {
+		
+		if($this->user->IsAdministrator()){
+  			$this->db->ExecuteQuery(self::SQL('delete user'), array($id));	
+  			Header('Location:'. $this->request->CreateUrl('acp'));
+  		}
 	}
 
 	/**
@@ -222,18 +238,45 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 	}
 	
 	/**
+	* 	Get all users
+	*/
+	public function GetAllUsers() {
+		return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get all'));
+	}
+	
+	/**
 	*	IsAdministrator, check if user is administrator
 	*/
 	public function IsAdministrator() {
 		$user = self::GetUserProfile();
 		$ifAdmin = false;
 		
-		foreach($user['groups'] as $val) {
-			if($val['akronym'] == 'admin')
-				$ifAdmin=true;
+		if($this->IsAuthenticated()) {
+			foreach($user['groups'] as $val) {
+				if($val['akronym'] == 'admin')
+					$ifAdmin=true;
+			}
+		}
+			
+		return $ifAdmin;
+	}
+	
+	/**
+	*	IsAdministrator, check if user is administrator
+	*/
+	public function IsWriter() {
+		$user = self::GetUserProfile();
+		$ifWriter = false;
+		
+		
+		if($this->IsAuthenticated()) {
+			foreach($user['groups'] as $val) {
+				if($val['akronym'] == 'writer' || $val['akronym'] == 'admin')
+					$ifWriter=true;
+			}
 		}
 		
-		return $ifAdmin;
+		return $ifWriter;
 	}
 	
 	/**

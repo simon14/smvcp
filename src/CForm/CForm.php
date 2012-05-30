@@ -44,6 +44,7 @@ class CFormElement implements ArrayAccess{
     $validates = (isset($this['validation-pass']) && $this['validation-pass'] === false) ? ' validation-failed' : null;
     $class = (isset($class) || isset($validates)) ? " class='{$class}{$validates}'" : null;
     $name = " name='{$this['name']}'";
+    $javascript = $this['javascript'];
     $label = isset($this['label']) ? ($this['label'] . (isset($this['required']) && $this['required'] ? "<span class='form-element-required'>*</span>" : null)) : null;
     $autofocus = isset($this['autofocus']) && $this['autofocus'] ? " autofocus='autofocus'" : null;    
     $readonly = isset($this['readonly']) && $this['readonly'] ? " readonly='readonly'" : null;   
@@ -64,7 +65,7 @@ class CFormElement implements ArrayAccess{
     if($type && $this['type'] == 'submit') {
       return "<p><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} /></p>\n";   
     } else if($type && $this['type'] == 'textarea') {
-      return "<p><label>{$label}</label><br /><textarea id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly}>". $this['value']. "</textarea>";
+      return "<p><label>{$label}</label><br /><textarea id='$id'{$type}{$javascript}{$class}{$name}{$value}{$autofocus}{$readonly}>". $this['value']. "</textarea>";
 	} else if($type && $this['type'] == 'dropdown') {
 	  $html="<p><label>{$label}</label><br /><select id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly}>";
 	  foreach($values as $val){
