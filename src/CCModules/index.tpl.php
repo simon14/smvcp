@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <h1>Module Manager</h1>
 
 
@@ -25,3 +26,4 @@ controllers and their methods. You enable and disable controllers in
   
 <?php endforeach; ?>      
 </ul>
+</div>

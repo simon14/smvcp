@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <h1> User profile. </h1>
 
 <div class='content'>
@@ -7,4 +8,4 @@
   <p>User is anonymous and not authenticated.</p>
 <?php endif; ?>
 </div>
-
+</div>

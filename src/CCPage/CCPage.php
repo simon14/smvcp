@@ -36,7 +36,18 @@ class CCPage extends CObject implements IController {
     $content = new CMContent($id);
     $content->FilterContent();
     
+    
     $comment = new CMComment($id);
+    
+    $video = null;
+    $image = null;
+    
+    
+    if(strpos($content['image'], 'iframe')>0) {
+    	$video = $content['image'];
+    } else {
+    	$image = $content['image'];
+    }
     
     $this->views->SetTitle('Page: '.$content['title']);
 	$this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
@@ -45,6 +56,8 @@ class CCPage extends CObject implements IController {
 			      'formAction'=>$this->request->CreateUrl("page/handler/{$id}"),
 			      'user'=>$this->user,
 			      'userWriter'=>$this->user->IsWriter(),
+			      'video' => $video,
+			      'image' => $image,
 			      
                 ), 'primary');
 	$this->views->AddInclude(__DIR__.'/sidebar.tpl.php', array(

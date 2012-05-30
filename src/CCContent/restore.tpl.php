@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <h1>Restore</h1>
 <p>One controller to manage the actions for content, mainly list, create, edit, delete, view.</p>
 
@@ -28,3 +29,4 @@
 <?php else:?>
 <p>You have to be logged in as an administrator to restore contents</p>
 <?php endif;?>
+</div>

@@ -1,5 +1,6 @@
+<?php if(!empty($image)):?><img style='width:780px;' src='<?=$image?>' /><?php elseif(isset($video)):?><?=$video?><?php endif;?>
+<div class='content-wrapper'>
 <?php if($content['id'] && empty($content['deleted'])):?>
-<img style='width:780px;' src='<?=$content['image']?>' />
   <h1><?=$content['title']?></h1>
 <div class='content'>
   <p><?=$content['content']?></p>
@@ -14,7 +15,7 @@
 
 
 <?php if($content['type']=='news'):?>
-<a href='<?=create_url("page/like/{$content['id']}")?>'>like</a> Rating: <?=$content['rating']?>
+<a href='<?=create_url("page/like/{$content['id']}")?>'>like</a> - <?=$content['rating']?>
 <?php if(isset($user['akronym'])):?>
 
 <form name='comment' action='<?=$formAction?>' method='post'>
@@ -30,6 +31,7 @@
 
 
 <?php else:?>
+<br />
 <p>You have to be logged in to comment!</p>
 <?php endif;?>
 
@@ -37,8 +39,9 @@
 <p class='post'>
 <?=$val['entry']?>
 <br />
-<small>Posted on: <?=$val['date']?> By:<?=$val['owner']?></small>
+<small id='mini'><?=$val['owner']?> | <?=$val['date']?></small>
 </p>
 <?php endforeach;?>
 
 <?php endif;?>
+</div>

@@ -108,7 +108,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       		'update password'		  => "UPDATE User SET password = ?, salt = ? WHERE id = ?;",
       		'get all'				  => "SELECT * FROM User;",
       		'delete user'			  => "DELETE FROM User WHERE id=?;",
-
+			'get groups'			  => "SELECT * FROM Groups;",
 		);
 		
 		if(!isset($queries[$key])) {
@@ -125,6 +125,76 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 	
 	}
 	
+	/**
+  	* 	Make user a admin.
+  	*
+  	*	@param ID of user to be promoted.
+  	*/
+  	public function makeAdmin($id=null) {
+
+
+		if($this->user->IsAdministrator()) { 		
+	  		$groupsNr = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get groups'));
+  			$adminGrp = null;
+  			foreach($groupsNr as $val) {
+  				if($val['akronym'] == 'admin') {
+  					$adminGrp=$val['id'];
+	  			}
+  			}
+  		
+  			if($adminGrp!=null && $id!=null) {
+	  			try {
+  					$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($id, $adminGrp));
+	  				$this->session->AddMessage('notice', 'User was promoted to admin.');
+  				} catch(Exception $e) {
+  					$this->session->AddMessage('notice', 'Failed to promote user.');
+  				}
+  			}
+  		} else {
+  			$this->session->AddMessage('warning', 'You cannot promote a user unless your an administrator.');
+  		}
+  		
+  		Header('Location:'.$_SESSION['lastPage']);
+  	}
+  	
+  	/**
+  	*	Make user a writer.
+  	*
+  	*	@param ID of user to be promoted.
+  	*/
+  	public function makeWriter($id=null) {
+  			
+  		if($this->user->IsAdministrator()) { 		
+	  		$groupsNr = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get groups'));
+  			$writerGrp = null;
+  			foreach($groupsNr as $val) {
+  				if($val['akronym'] == 'writer') {
+  					$writerGrp=$val['id'];
+	  			}
+  			}
+  			
+  			if($writerGrp!=null && $id!=null) {
+	  			try {
+		  			$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($id, $writerGrp));
+  					$this->session->AddMessage('notice', 'User was promoted to writer');
+  				} catch (Exception $e) {	
+  					$this->session->AddMessage('notice', 'Failed to promote user.');
+	  			}
+	  		}
+	  		
+  		} else {
+  			$this->session->AddMessage('warning', 'You cannot promote a user unless your an administrator.');
+  		}
+  		
+  		Header('Location:'.$_SESSION['lastPage']);
+
+  	}
+  	
+  	/**
+  	*	Delete a user.
+  	*
+  	*	@param ID of user to be deleted.
+  	*/
 	public function Delete($id=null) {
 		
 		if($this->user->IsAdministrator()){
@@ -241,7 +311,25 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 	* 	Get all users
 	*/
 	public function GetAllUsers() {
-		return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get all'));
+		
+		$users=$this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get all'));
+		/*foreach($users as $key => $val) {
+			$users["{$key}"]['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($val['id']));
+		}*/
+		
+		$i=0;
+		foreach($users as $key => $val) {
+			$groups = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($users[$i]['id']));
+			$groupsAkronyms = array();
+			foreach($groups as $grp) {
+				array_push($groupsAkronyms, $grp['akronym']);
+			}
+		
+			$users["{$key}"]['groups']=$groupsAkronyms;
+			$i++;
+		}
+		
+		return $users;
 	}
 	
 	/**

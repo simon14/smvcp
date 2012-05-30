@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <h1>Blog</h1>
 <p>All blog-like list of all content with the type "post", <a href='<?=create_url("content")?>'>view all content</a>.</p>
 
@@ -23,3 +24,4 @@
 <?php else:?>
   <p>No posts exists.</p>
 <?php endif;?>
+</div>

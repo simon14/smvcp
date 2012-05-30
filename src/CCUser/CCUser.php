@@ -13,14 +13,16 @@ class CCUser extends CObject implements IController{
 	
 	public function Index() {
 		
-		
-		//Header('Location:'.$this->request->CreateUrl('user/login'));
-		
-		$this->views->SetTitle('User Profile');
+		if($this->user->IsAuthenticated()) {
+			Header('Location:'.$this->request->CreateUrl('user/profile'));
+		} else {
+			Header('Location:'.$this->request->CreateUrl('user/login'));
+		}
+		/*$this->views->SetTitle('User Profile');
 		$this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
 			'is_authenticated' => $this->userModel->IsAuthenticated(),
 			'user' => $this->userModel->GetUserProfile(),
-		));
+		));*/
 	}
 	
 	public function login() {
@@ -133,6 +135,20 @@ class CCUser extends CObject implements IController{
   	public function Delete($id=null) {
 
   	  		$this->user->Delete($id);
+  	}
+  	
+  	/**
+  	* 	Make user a admin.
+  	*/
+  	public function makeAdmin($id=null) {
+  		$this->user->makeAdmin($id);
+  	}
+  	
+  	/**
+  	*	Make user a writer.
+  	*/
+  	public function makeWriter($id=null) {
+  		$this->user->makeWriter($id);
   	}
   	
    /**

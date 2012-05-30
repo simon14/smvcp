@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <div class='box'>
 <h4>All modules</h4>
 <p>All Smvc modules.</p>
@@ -84,4 +85,5 @@
   <?php endif; ?>
 <?php endforeach; ?>
 </ul>
+</div>
 </div>

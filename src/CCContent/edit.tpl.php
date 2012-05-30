@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <?php if($content['created']): ?>
   <h1>Edit Content</h1>
 <div class='content'>
@@ -23,4 +24,5 @@
 </em></p>
 
 <p><a href='<?=create_url('content')?>'>View all content</a></p>
+</div>
 </div>

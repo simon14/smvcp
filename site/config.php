@@ -51,14 +51,11 @@ $cs->config['debug'] = false;
 */
 $cs->config['controllers'] = array(
   'index'     => array('enabled' => true,'class' => 'CCIndex'),
-  'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
-  'guestbook' => array('enabled' => true,'class' => 'CCGuestBook'),
   'user'	  => array('enabled' => true,'class' => 'CCUser'),
   'acp'		  => array('enabled' => true,'class' => 'CCAdminControlPanel'),
   'content'	  => array('enabled' => true,'class' => 'CCContent'),
   'blog'	  => array('enabled' => true,'class' => 'CCBlog'),
   'page'	  => array('enabled' => true,'class' => 'CCPage'),
-  'theme'	  => array('enabled' => true,'class' => 'CCTheme'),
   'modules'   => array('enabled' => true,'class' => 'CCModules'),
   'news'   => array('enabled' => true,'class' => 'CCNews'),
 );

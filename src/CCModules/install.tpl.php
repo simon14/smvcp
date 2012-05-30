@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <h1>Install modules</h1>
 
 <p>The following modules were affected by this action.</p>
@@ -13,3 +14,4 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+</div>

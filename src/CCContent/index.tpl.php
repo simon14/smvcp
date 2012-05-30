@@ -1,3 +1,4 @@
+<div class='content-wrapper'>
 <h1>Content Controller Index</h1>
 <p>One controller to manage the actions for content, mainly list, create, edit, delete, view.</p>
 
@@ -32,3 +33,4 @@
   <li><a href='<?=create_url('content/create')?>'>Create new content</a>
   <li><a href='<?=create_url('content/restore')?>'>Restore old content</a>
 </ul>
+</div>
