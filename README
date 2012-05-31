@@ -3,4 +3,4 @@ SMVC - A Mvc framework
 :: Installation ::
 
 Open config.php, found in /site/. Change the database info so it matches your database, at this moment only MySQL works.
-Then point your browser to the startpage and press the Install link. Assuming that you have fixed the .htaccess file.
+Then point your browser to ~/modules/install, '~' being the address to the website. Assuming that you have fixed the .htaccess file.
