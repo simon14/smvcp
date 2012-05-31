@@ -49,6 +49,8 @@ class CCPage extends CObject implements IController {
     	$image = $content['image'];
     }
     
+    
+    
     $this->views->SetTitle('Page: '.$content['title']);
 	$this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'content' => $content,
@@ -58,6 +60,7 @@ class CCPage extends CObject implements IController {
 			      'userWriter'=>$this->user->IsWriter(),
 			      'video' => $video,
 			      'image' => $image,
+			      'userAuth' => $this->user->IsAuthenticated(),
 			      
                 ), 'primary');
 	$this->views->AddInclude(__DIR__.'/sidebar.tpl.php', array(
@@ -98,8 +101,8 @@ class CCPage extends CObject implements IController {
   public function Delete($id=null, $where=null) {
   		$content = new CMContent();
 	  	$content->Delete($id);
-	  	self::RedirectToController($where);
 	  	
+	  	Header('Location:'.$_SESSION['lastPage']);  
   }
 	
   public function RedirectToController($where) {

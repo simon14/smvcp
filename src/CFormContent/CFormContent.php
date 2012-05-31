@@ -27,6 +27,7 @@ class CFormContent extends CForm {
         // ->AddElement(new CFormElementText('filter', array('value'=>$content['filter'])))
          ->AddElement(new CFormElementDropdown('type', array('label'=>'Type:', 'values'=>array('blog', 'page', 'news'), 'selected'=>$content['type'], 'class' => 'drop')))
          ->AddElement(new CFormElementDropdown('filter', array('label'=>'Filter:', 'values'=>array('plain', 'html', 'bbcode', 'htmlpurify'), 'selected'=>$content['filter'], 'class' => 'drop')))
+         ->AddElement(new CFormElementDropdown('members', array('label'=>'Members only:', 'values'=>array('no', 'yes'), 'selected'=>$content['members'], 'class' => 'drop')))
          ->AddElement(new CFormElementSubmit($save, array('callback'=>array($this, 'DoSave'), 'class' => 'button')));//, 'callback-args'=>array($this->content))));
 
     $this->SetValidation('title', array('not_empty'));
@@ -45,6 +46,7 @@ class CFormContent extends CForm {
     $content['image'] 		= $form['image']['value'];
     $content['img'] 		= $form['img']['value'];
     $content['filter']		= $form['filter']['value'];
+	$content['members'] 	= $form['members']['value'];
     
     return $this->content->Save($content);
   }

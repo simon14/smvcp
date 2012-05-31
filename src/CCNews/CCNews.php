@@ -20,10 +20,21 @@ class CCNews extends CObject implements IController {
    */
   public function Index() {
     $content = new CMContent();
+    $content = $content->GetAllFilteredData('desc');
     $gravatars=$this->user->GravatarGenerator();
+    $userAuth = $this->user->IsAuthenticated();
+    $contents=array();
+    
+    foreach($content as $val) {
+	 	if($val['members']=='yes' && $userAuth) {
+		    array_push($contents, $val);
+		} elseif($val['members']=='no') {
+			array_push($contents, $val);
+		}
+    }
     $this->views->SetTitle('News');
     $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
-                  'contents' => $content->GetAllFilteredData('desc'), 
+                  'contents' => $contents, 
                   'gravatar' => $gravatars,
                   'userId'	 => $this->user->GetId(),
                   'userWriter' => $this->user->IsWriter(),

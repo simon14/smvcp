@@ -1,3 +1,10 @@
+<?php if($content['members']=='yes' && $userAuth==false):?>
+<div class='content-wrapper'>
+<h1><?=$content['title']?></h1>
+<h3> Sorry! You have to be a member to see this post. </h3>
+<p> Already a member? <a href='<?=create_url('user/login')?>'>Login here</a> or <a href='<?=create_url('user/create')?>'>create a new accout right here.</a>
+</div>
+<?php else:?>
 <?php if(!empty($image)):?><img style='width:780px;' src='<?=$image?>' /><?php elseif(isset($video)):?><?=$video?><?php endif;?>
 <div class='content-wrapper'>
 <?php if($content['id'] && empty($content['deleted'])):?>
@@ -45,3 +52,4 @@
 
 <?php endif;?>
 </div>
+<?php endif;?>

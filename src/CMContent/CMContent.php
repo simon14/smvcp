@@ -16,18 +16,18 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
         try {
           $this->db->ExecuteQuery(self::SQL('drop table content'));
           $this->db->ExecuteQuery(self::SQL('create table content'));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Hello World!', '', 'blog', "This is a demo post.\n\nThis is another row in this demo post.", 1, '', '', 'plain', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Hello Word Again!', '', 'blog', "This is another demo post.\n\nThis is another row in this demo post.",  1, '', '', 'plain', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Hello World Once More!', '', 'blog', "This is one more demo post.\n\nThis is another row in this demo post.",  1, '', '', 'plain', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Home', '', 'page' , "This is a demo page, this could be your personal home-page.\n\nLydia is a PHP-based MVC-inspired Content management Framework, watch the making of Lydia at: http://dbwebb.se/lydia/tutorial.",  2, '', '', 'plain', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('About', '', 'page' , "Det här är sidan. <br /> Sidan är inte stor. <br /> Sidan är gjortd av Simon. <br /> Som en del av kursen phpmvc. <br /> Förinstallerade innehållet i nyheter är taget från <a href='http://www.feber.se'>feber.se</a> ",  2, '', '', 'html', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Download', '', 'page', "This is a demo page, this could be your personal download-page.\n\nYou can download your own copy of lydia from https://github.com/mosbth/lydia.",  2, '', '', 'plain', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Page with BBCode', '', 'page', "This is a demo page with some BBCode-formatting.\n\n[b]Text in bold[/b] and [i]text in italic[/i] and [url=http://dbwebb.se]a link to dbwebb.se[/url]. You can also include images using bbcode, such as the lydia logo: [img]http://dbwebb.se/lydia/current/themes/core/logo_80x80.png[/img]",  3, '', '', 'bbcode', date('c')));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Page with HTMLPurifier', '', 'page', "This is a demo page with some HTML code intended to run through <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Edit the source and insert HTML code and see if it works.\n\n<b>Text in bold</b> and <i>text in italic</i> and <a href='http://dbwebb.se'>a link to dbwebb.se</a>. JavaScript, like this: <javascript>alert('hej');</javascript> should however be removed.",  3, '', '', 'htmlpurify', date('c')));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Hello World!', '', 'blog', "This is a demo post.\n\nThis is another row in this demo post.", 1, '', '', 'plain', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Hello Word Again!', '', 'blog', "This is another demo post.\n\nThis is another row in this demo post.",  1, '', '', 'plain', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Hello World Once More!', '', 'blog', "This is one more demo post.\n\nThis is another row in this demo post.",  1, '', '', 'plain', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Home', '', 'page' , "This is a demo page, this could be your personal home-page.\n\nLydia is a PHP-based MVC-inspired Content management Framework, watch the making of Lydia at: http://dbwebb.se/lydia/tutorial.",  2, '', '', 'plain', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('About', '', 'page' , "Det här är sidan. <br /> Sidan är inte stor. <br /> Sidan är gjortd av Simon. <br /> Som en del av kursen phpmvc. <br /> Förinstallerade innehållet i nyheter är taget från <a href='http://www.feber.se'>feber.se</a> ",  2, '', '', 'html', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Download', '', 'page', "This is a demo page, this could be your personal download-page.\n\nYou can download your own copy of lydia from https://github.com/mosbth/lydia.",  2, '', '', 'plain', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Page with BBCode', '', 'page', "This is a demo page with some BBCode-formatting.\n\n[b]Text in bold[/b] and [i]text in italic[/i] and [url=http://dbwebb.se]a link to dbwebb.se[/url]. You can also include images using bbcode, such as the lydia logo: [img]http://dbwebb.se/lydia/current/themes/core/logo_80x80.png[/img]",  3, '', '', 'bbcode', date('c'), 'no'));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Page with HTMLPurifier', '', 'page', "This is a demo page with some HTML code intended to run through <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Edit the source and insert HTML code and see if it works.\n\n<b>Text in bold</b> and <i>text in italic</i> and <a href='http://dbwebb.se'>a link to dbwebb.se</a>. JavaScript, like this: <javascript>alert('hej');</javascript> should however be removed.",  3, '', '', 'htmlpurify', date('c'), 'no'));
         
           $this->db->ExecuteQuery(self::SQL('insert content'), array('Nytt rollspel från CD Project Red', 'Den polska bakom The Witcher, CD Projekt Red, avslöjade tidigare i dag ett helt nytt rollspel. ', 'news', "Den polska bakom The Witcher, CD Projekt Red, avslöjade tidigare i dag ett helt nytt rollspel. Spelet baseras på Mike Pondsmiths rollspel (bordsrollspel) Cyberpunk som släppte sin första revision någon gång på slutet av 80-talet. 
 		CD Projekt Red lovar en rik, olinjär och komplex samt gripande, ett löfte som de troligen kan hålla då man redan har bevisat det med The Witcher-spelen. Dock är det inte samma team som jobbade på The Witcher och The Witcher 2 men däremot så jobbar ett flertal \"veteraner\" från The Witcher-teamet med detta spel. 
-		På tal om The Witcher och CD Project Red så tillkännagav man också i dag att man även kommer släppa The Witcher 2 till Mac under hösten.",  4, 'http://www.student.bth.se/~sihf11/images/red-big.jpeg', 'http://www.student.bth.se/~sihf11/images/red-mini.jpg', 'html', date('c')));
+		På tal om The Witcher och CD Project Red så tillkännagav man också i dag att man även kommer släppa The Witcher 2 till Mac under hösten.",  4, 'http://www.student.bth.se/~sihf11/images/red-big.jpeg', 'http://www.student.bth.se/~sihf11/images/red-mini.jpg', 'html', date('c'), 'yes'));
 		
           $this->db->ExecuteQuery(self::SQL('insert content'), array('Klassikern DOOM 3 kommer tillbaka', 'Har du saknat klassikern DOOM? Goda nyheter. Bethesda meddelar att de senare i år kommer att släppa DOOM 3 BFG Edition som innehåller DOOM, DOOM 2, DOOM 3.', 'news', "Har du saknat klassikern DOOM? Goda nyheter. Bethesda meddelar att de senare i år kommer att släppa DOOM 3 BFG Edition som innehåller DOOM, DOOM 2, DOOM 3 och DOOM 3: Ressurection of Evil tillsammans med Lost Mission som är en singelplayerkampanj i Doom 3 innehållandes sju nya nivåer som aldrig släppts. 
 
@@ -35,13 +35,13 @@ Förutom det trevliga innehållet så kommer specialutgåvan att belönas med uppdate
 
 \"DOOM 3 was enthusiastically embraced by gamers worldwide at its release. Today, the full experience has been enhanced and extended to be better than ever, and is delivered across all the platforms with a silky smooth frame rate and highly responsive controls. New support for 3D TVs, monitors, and head mounted displays also allows players to experience the game with more depth than ever before. We think shooter fans everywhere will love it.\"
 
-Spelet kommer att säppas till PC, Xbox 360 och PS3 senare i höst. Utannonseringstrailern ser ni ovan.",  4, '<iframe width="780" height="438" src="http://www.youtube.com/embed/qNJ1GHYHQf8" frameborder="0" allowfullscreen></iframe>', 'http://www.student.bth.se/~sihf11/images/doom-mini.jpg', 'bbcode', date('c')));
+Spelet kommer att säppas till PC, Xbox 360 och PS3 senare i höst. Utannonseringstrailern ser ni ovan.",  4, '<iframe width="780" height="438" src="http://www.youtube.com/embed/qNJ1GHYHQf8" frameborder="0" allowfullscreen></iframe>', 'http://www.student.bth.se/~sihf11/images/doom-mini.jpg', 'bbcode', date('c'), 'no'));
         
           $this->db->ExecuteQuery(self::SQL('insert content'), array('Nytt Ratchet and Clank-spel från Insomni', 'I dag tillkännagav Insomniac att man håller på att utveckla ett nytt spel i Ratchet & Clank-serien. Spelet kommer heta Ratchet & Clank: QForce och släpps till PlayStation 3 under hösten. ', 'news', "I dag tillkännagav Insomniac att man håller på att utveckla ett nytt spel i Ratchet & Clank-serien. Spelet kommer heta Ratchet & Clank: QForce och släpps till PlayStation 3 under hösten. 
 
 I ett inlägg på den officiella PlayStation-bloggen skrev Insomniac-chefen, Ted Price, att spelet kommer bli ett mindre äventyr men kommer även återgå till spelseriens rötter. Trots detta så kommer spelet även erbjuda ett helt nytt sätt att spela Ratchet & Clank med sina vänner, vad nu det innebär återstår helt enkelt att se. 
 
-Spelet kommer släppas både på Blu-Ray samt via PSN och med tanke på hur populärt Ratchet & Clank: Quest fot Booty var så har nog detta också potential att lyckas.",  4, 'http://www.student.bth.se/~sihf11/images/ratchet-big.jpeg', 'http://www.student.bth.se/~sihf11/images/ratchet-mini.jpg', 'bbcode', date('c')));
+Spelet kommer släppas både på Blu-Ray samt via PSN och med tanke på hur populärt Ratchet & Clank: Quest fot Booty var så har nog detta också potential att lyckas.",  4, 'http://www.student.bth.se/~sihf11/images/ratchet-big.jpeg', 'http://www.student.bth.se/~sihf11/images/ratchet-mini.jpg', 'bbcode', date('c'), 'no'));
         
           $this->db->ExecuteQuery(self::SQL('insert content'), array('Blizzard fortsätter uppdatera Diablo III', '
 Efter att spelet nu varit ute i närmare två veckor börjar Blizzard mer i detalj berätta om de förändringar som är på gång.', 'news', "Efter att spelet nu varit ute i närmare två veckor börjar Blizzard mer i detalj berätta om de förändringar som är på gång. Det handlar en hel del om att de agerar på spelares synpynkter - bland annat vad gäller balansen mellan olika karaktärer och förmågor. 
@@ -58,9 +58,9 @@ I bloggposten där Blizzard går mer in i detalj på förändringarna, och anledninge
 - The most common level 60 build in the game is only used by 0.7% of level 60 characters of that class (not including Passive diversity) 
 - The most used runes for each class at level 60 are Barbarian: Best Served Cold, Demon Hunter: Lingering Fog, Wizard: Mirror Skin, Monk: Peaceful Repose, Witch Doctor: Numbing Dart
 
-Hur många karaktärer har du?",  4, 'http://www.student.bth.se/~sihf11/images/diablo-big.jpeg', 'http://www.student.bth.se/~sihf11/images/diablo-mini.jpg', 'bbcode', date('c')));
+Hur många karaktärer har du?",  4, 'http://www.student.bth.se/~sihf11/images/diablo-big.jpeg', 'http://www.student.bth.se/~sihf11/images/diablo-mini.jpg', 'bbcode', date('c'), 'yes'));
         
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Metro: Last Light', 'Här har vi en vacker bild från kommande Metro: Last Light. ', 'news', "Här har vi en vacker bild från kommande Metro: Last Light. ",  4, 'http://www.student.bth.se/~sihf11/images/metro-big.jpeg', 'http://www.student.bth.se/~sihf11/images/metro-mini.jpg', 'bbcode', date('c')));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Metro: Last Light', 'Här har vi en vacker bild från kommande Metro: Last Light. ', 'news', "Här har vi en vacker bild från kommande Metro: Last Light. ",  4, 'http://www.student.bth.se/~sihf11/images/metro-big.jpeg', 'http://www.student.bth.se/~sihf11/images/metro-mini.jpg', 'bbcode', date('c'), 'no'));
           
           return array('success', 'Successfully created the database tables and created a default "Hello World" blog post, owned by you.');
         } catch(Exception$e) {
@@ -167,14 +167,14 @@ Hur många karaktärer har du?",  4, 'http://www.student.bth.se/~sihf11/images/dia
   public static function SQL($key=null) {
     $queries = array(
       'drop table content'		=> "truncate table Content; drop table Content",
-      'create table content'	=> "CREATE TABLE `Content` (  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  `title` varchar(40) DEFAULT NULL,  `short` varchar(150) DEFAULT NULL,  rating int(11) DEFAULT '0', `type` varchar(40) DEFAULT NULL,  `content` text,  `idUser` int(11) DEFAULT NULL,  `image` text,  `img` text,  `filter` varchar(10) DEFAULT NULL,  `created` datetime DEFAULT NULL,  `updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,  `deleted` datetime DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;",
-      'insert content'          => "INSERT INTO `Content` (`title`, `short`, `type`, `content`, `idUser`, `image`, `img`, `filter`, `created`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      'create table content'	=> "CREATE TABLE `Content` (  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  `title` varchar(40) DEFAULT NULL,  `short` varchar(150) DEFAULT NULL,  rating int(11) DEFAULT '0', `type` varchar(40) DEFAULT NULL,  `content` text,  `idUser` int(11) DEFAULT NULL,  `image` text,  `img` text,  `filter` varchar(10) DEFAULT NULL,  `created` datetime DEFAULT NULL,  `updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,  `deleted` datetime DEFAULT NULL, members VARCHAR(3) DEFAULT 'no', PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;",
+      'insert content'          => "INSERT INTO `Content` (`title`, `short`, `type`, `content`, `idUser`, `image`, `img`, `filter`, `created`, members) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
       'select * by id'          => 'SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
       'select * by key'         => 'SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.key=%s;',
       'select *'         		=> 'SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
       'select-all-desc'         => "SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id ORDER BY c.id DESC;",
       'select-all-asc'          => "SELECT c.*, u.akronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id ORDER BY c.id ASC;",
-      'update content'          => "UPDATE Content SET title=?, short=?, type=?, content=?, image=?, img=?, filter=? WHERE id=?;",
+      'update content'          => "UPDATE Content SET title=?, short=?, type=?, content=?, image=?, img=?, filter=?, members=? WHERE id=?;",
       'delete content'			=> "UPDATE Content SET deleted = ? WHERE id = ?;",
       'restore content'			=> "UPDATE Content SET deleted = NULL WHERE id = ?;",
       'like'					=> "UPDATE Content SET rating = rating+1 WHERE id = ?;",
@@ -227,11 +227,11 @@ Hur många karaktärer har du?",  4, 'http://www.student.bth.se/~sihf11/images/dia
     if($this['id']) {
       //echo sprintf(self::SQL('update content'), $content['title'], $content['subtitle'], $content['type'], $content['content'], $content['image'], $content['video']);
       //echo $this['id'];
-      $this->db->ExecuteQuery(self::SQL('update content'), array($content['title'], $content['short'], $content['type'], $content['content'], $content['image'], $content['img'], $content['filter'], $this['id']));
+      $this->db->ExecuteQuery(self::SQL('update content'), array($content['title'], $content['short'], $content['type'], $content['content'], $content['image'], $content['img'], $content['filter'], $content['members'], $this['id']));
       $msg = 'update';
     } else {
       //echo sprintf(self::SQL('insert content'), $content['title'], $content['subtitle'], $content['type'], $content['content'], $this->user['id'], $content['image'], $content['video'], date('c'));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array($content['title'], $content['short'], $content['type'], $content['content'], $this->user['id'], $content['image'], $content['img'], $content['filter'], date('c')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array($content['title'], $content['short'], $content['type'], $content['content'], $this->user['id'], $content['image'], $content['img'], $content['filter'], date('c'), $content['members']));
       $this['id'] = $this->db->LastInsertId();
       $msg = 'created';
     }
